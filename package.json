@@ -3,31 +3,42 @@
   "version": "1.0.0",
   "description": "Adjutor API automation suite using Postman and Newman",
   "main": "run-tests.js",
+
   "scripts": {
     "test": "node run-tests.js"
   },
+
   "keywords": [
     "postman",
     "newman",
     "api-testing",
     "automation"
   ],
+
   "author": "Blessing",
   "license": "ISC",
+
   "dependencies": {
     "dotenv": "^16.6.1",
     "newman": "^6.2.1"
   },
+
+  "devDependencies": {
+    "newman-reporter-html": "^1.0.5"
+  },
+
   "directories": {
     "doc": "docs"
   },
-  "devDependencies": {},
+
   "repository": {
     "type": "git",
     "url": "git+https://github.com/B-isaiah/adjutor-api-tests.git"
   },
+
   "bugs": {
     "url": "https://github.com/B-isaiah/adjutor-api-tests/issues"
   },
+
   "homepage": "https://github.com/B-isaiah/adjutor-api-tests#readme"
 }
