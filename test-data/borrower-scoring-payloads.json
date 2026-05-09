@@ -1,0 +1,31 @@
+{
+  "validBorrower": {
+    "gender": "Female",
+    "marital_status": "Single",
+    "age": "21",
+    "location": "lagos",
+    "no_of_dependent": "0",
+    "type_of_residence": "Rented Apartment",
+    "educational_attainment": "BSc, HND and Other Equivalent",
+    "employment_status": "Employed",
+    "sector_of_employment": "Other Financial",
+    "monthly_net_income": "100,000 - 199,999",
+    "employer_category": "Private Company",
+    "bvn": "22536051111",
+    "phone_number": "08012345678",
+    "total_years_of_experience": 5,
+    "time_with_current_employer": 2,
+    "previous_lendsqr_loans": 3,
+    "phone": "07062561111",
+    "bvn_phone": "07062561111",
+    "office_email": "test@company.com",
+    "personal_email": "test@gmail.com",
+    "amount": 10000
+  },
+
+  "invalidBorrower": {
+    "gender": "",
+    "bvn": "123",
+    "phone_number": "abc"
+  }
+}

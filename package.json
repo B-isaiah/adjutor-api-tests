@@ -1,0 +1,12 @@
+{
+  "name": "adjutor-api-automation",
+  "version": "1.0.0",
+  "description": "Automated API testing suite for Adjutor Decisioning APIs",
+  "main": "index.js",
+  "scripts": {
+    "test": "newman run collections/Adjutor_Decisioning_API_Test_Suite.postman_collection.json -e environments/Adjutor_Test_Environment.postman_environment.json"
+  },
+  "dependencies": {
+    "newman": "^6.2.2"
+  }
+}

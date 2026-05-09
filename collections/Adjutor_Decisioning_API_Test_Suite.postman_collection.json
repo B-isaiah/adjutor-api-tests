@@ -1,0 +1,207 @@
+{
+  "info": {
+    "_postman_id": "adjutor-decisioning-api-suite",
+    "name": "Adjutor Decisioning API Test Suite",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+
+  "item": [
+    {
+      "name": "Nigerian Country Specific Endpoints",
+      "item": [
+
+        {
+          "name": "Decision Models",
+          "item": [
+
+            {
+              "name": "TC-DM-001 Get Decision Models Successfully",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{bearerToken}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/decisioning/models",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["decisioning", "models"]
+                }
+              },
+
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+
+                      "pm.test('Response status code should be 200 OK', function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+
+                      "pm.test('Response time should be less than 3 seconds', function () {",
+                      "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                      "});",
+
+                      "pm.test('Response body should be valid JSON', function () {",
+                      "    pm.response.to.be.json;",
+                      "});"
+
+                    ]
+                  }
+                }
+              ]
+            },
+
+            {
+              "name": "TC-DM-002 Unauthorized Access to Decision Models",
+              "request": {
+                "method": "GET",
+                "url": {
+                  "raw": "{{baseUrl}}/decisioning/models",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["decisioning", "models"]
+                }
+              },
+
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+
+                      "pm.test('Unauthorized request should return 401', function () {",
+                      "    pm.response.to.have.status(401);",
+                      "});"
+
+                    ]
+                  }
+                }
+              ]
+            }
+
+          ]
+        },
+
+        {
+          "name": "Borrower Scoring",
+          "item": [
+
+            {
+              "name": "TC-BS-001 Successful Borrower Scoring",
+              "request": {
+                "method": "POST",
+
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{bearerToken}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"gender\": \"Female\",\n    \"marital_status\": \"Single\",\n    \"age\": \"21\",\n    \"location\": \"lagos\",\n    \"no_of_dependent\": \"0\",\n    \"type_of_residence\": \"Rented Apartment\",\n    \"educational_attainment\": \"BSc, HND and Other Equivalent\",\n    \"employment_status\": \"Employed\",\n    \"sector_of_employment\": \"Other Financial\",\n    \"monthly_net_income\": \"100,000 - 199,999\",\n    \"employer_category\": \"Private Company\",\n    \"bvn\": \"22536051111\",\n    \"phone_number\": \"08012345678\",\n    \"total_years_of_experience\": 5,\n    \"time_with_current_employer\": 2,\n    \"previous_lendsqr_loans\": 3,\n    \"phone\": \"07062561111\",\n    \"bvn_phone\": \"07062561111\",\n    \"office_email\": \"test@company.com\",\n    \"personal_email\": \"test@gmail.com\",\n    \"amount\": 10000\n}"
+                },
+
+                "url": {
+                  "raw": "{{baseUrl}}/decisioning/models/{{modelId}}",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["decisioning", "models", "{{modelId}}"]
+                }
+              },
+
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+
+                      "pm.test('Response status code should be 200 OK', function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+
+                      "pm.test('Response message should be Successful', function () {",
+                      "    let response = pm.response.json();",
+                      "    pm.expect(response.message).to.eql('Successful');",
+                      "});",
+
+                      "pm.test('Credit score items should exist', function () {",
+                      "    let response = pm.response.json();",
+                      "    pm.expect(response.data.credit_score_items).to.be.an('array');",
+                      "});",
+
+                      "pm.test('Response time should be less than 5 seconds', function () {",
+                      "    pm.expect(pm.response.responseTime).to.be.below(5000);",
+                      "});"
+
+                    ]
+                  }
+                }
+              ]
+            },
+
+            {
+              "name": "TC-BS-002 Missing Required Fields",
+              "request": {
+                "method": "POST",
+
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{bearerToken}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}"
+                },
+
+                "url": {
+                  "raw": "{{baseUrl}}/decisioning/models/{{modelId}}",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["decisioning", "models", "{{modelId}}"]
+                }
+              },
+
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+
+                      "pm.test('Response status code should be 400 Bad Request', function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});",
+                      "pm.test('Unauthorized request should return 401', function () {",
+                      "    pm.response.to.have.status(401);",
+                      "});"
+
+                    ]
+                  }
+                }
+              ]
+            }
+
+          ]
+        }
+
+      ]
+    }
+  ]
+}
