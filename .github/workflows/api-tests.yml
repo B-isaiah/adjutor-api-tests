@@ -1,0 +1,46 @@
+name: Adjutor API Test Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  api-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Inject Environment Variables
+        run: |
+          echo "bearerToken=${{ secrets.BEARER_TOKEN }}" >> $GITHUB_ENV
+          echo "baseUrl=https://adjutor.lendsqr.com/v2" >> $GITHUB_ENV
+          echo "modelId=2355" >> $GITHUB_ENV
+
+      - name: Run Newman API Tests
+        run: |
+          npx newman run collections/Adjutor_Decisioning_API_Test_Suite.postman_collection.json \
+          -e environments/Adjutor_Test_Environment.postman_environment.json \
+          --env-var "bearerToken=${{ secrets.BEARER_TOKEN }}" \
+          --reporters cli,html \
+          --reporter-html-export reports/report.html
+
+      - name: Upload Test Report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: api-test-report
+          path: reports/report.html
+          continue-on-error: true
