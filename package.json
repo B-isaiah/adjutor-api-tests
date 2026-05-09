@@ -1,12 +1,21 @@
 {
   "name": "adjutor-api-automation",
   "version": "1.0.0",
-  "description": "Automated API testing suite for Adjutor Decisioning APIs",
-  "main": "index.js",
+  "description": "Adjutor API automation suite using Postman and Newman",
+  "main": "run-tests.js",
   "scripts": {
-    "test": "newman run collections/Adjutor_Decisioning_API_Test_Suite.postman_collection.json -e environments/Adjutor_Test_Environment.postman_environment.json"
+    "test": "node run-tests.js"
   },
+  "keywords": [
+    "postman",
+    "newman",
+    "api-testing",
+    "automation"
+  ],
+  "author": "Blessing",
+  "license": "ISC",
   "dependencies": {
-    "newman": "^6.2.2"
+    "dotenv": "^16.6.1",
+    "newman": "^6.2.1"
   }
 }
