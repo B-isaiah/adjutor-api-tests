@@ -378,7 +378,5 @@ Potential enhancements:
 ---
 
 # Author
-Blessing
-QA Automation Engineer Project
-
-Built for Adjutor API Automation Assessment.
+Blessing Isaiah
+QA Automation Engineer Project built for Adjutor API Automation Assessment.
