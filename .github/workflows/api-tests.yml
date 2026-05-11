@@ -3,8 +3,10 @@ name: Adjutor API Test Pipeline
 on:
   push:
     branches: ["main"]
+
   pull_request:
     branches: ["main"]
+
   workflow_dispatch:
 
 jobs:
@@ -23,8 +25,8 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Install Newman HTML Reporter
-        run: npm install -g newman-reporter-html
+      - name: Install Newman HTML Extra Reporter
+        run: npm install -g newman-reporter-htmlextra
 
       - name: Create Reports Folder
         run: mkdir -p reports
@@ -41,8 +43,8 @@ jobs:
           --env-var "baseUrl=$baseUrl" \
           --env-var "modelId=$modelId" \
           --env-var "bearerToken=$bearerToken" \
-          --reporters cli,html \
-          --reporter-html-export reports/report.html
+          --reporters cli,htmlextra \
+          --reporter-htmlextra-export reports/report.html
 
       - name: Upload Test Report
         uses: actions/upload-artifact@v4
