@@ -20,11 +20,8 @@
 
   "dependencies": {
     "dotenv": "^16.6.1",
-    "newman": "^6.2.1"
-  },
-
-  "devDependencies": {
-    "newman-reporter-html": "^1.0.5"
+    "newman": "^6.2.2",
+    "newman-reporter-htmlextra": "^1.23.1"
   },
 
   "directories": {

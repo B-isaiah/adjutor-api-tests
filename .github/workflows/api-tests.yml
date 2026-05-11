@@ -2,9 +2,9 @@ name: Adjutor API Test Pipeline
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
   workflow_dispatch:
 
 jobs:
@@ -23,17 +23,24 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
+      - name: Install Newman HTML Reporter
+        run: npm install -g newman-reporter-html
+
+      - name: Create Reports Folder
+        run: mkdir -p reports
+
       - name: Inject Environment Variables
         run: |
-          echo "bearerToken=${{ secrets.BEARER_TOKEN }}" >> $GITHUB_ENV
           echo "baseUrl=https://adjutor.lendsqr.com/v2" >> $GITHUB_ENV
           echo "modelId=2355" >> $GITHUB_ENV
+          echo "bearerToken=${{ secrets.BEARER_TOKEN }}" >> $GITHUB_ENV
 
       - name: Run Newman API Tests
         run: |
           npx newman run collections/Adjutor_Decisioning_API_Test_Suite.postman_collection.json \
-          -e environments/Adjutor_Test_Environment.postman_environment.json \
-          --env-var "bearerToken=${{ secrets.BEARER_TOKEN }}" \
+          --env-var "baseUrl=$baseUrl" \
+          --env-var "modelId=$modelId" \
+          --env-var "bearerToken=$bearerToken" \
           --reporters cli,html \
           --reporter-html-export reports/report.html
 
@@ -42,5 +49,4 @@ jobs:
         if: always()
         with:
           name: api-test-report
-          path: reports/report.html
-          continue-on-error: true
+          path: reports/
